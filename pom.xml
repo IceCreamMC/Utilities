@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.sharkurmc</groupId>
+    <groupId>org.sharkurmc.utilities</groupId>
     <artifactId>utilities</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -43,4 +43,11 @@
             <url>https://repo.lucko.me/</url>
         </repository>
     </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>reposilite</id>
+            <url>https://reposilite.cezarsalat.tk/releases</url>
+        </repository>
+    </distributionManagement>
 </project>
