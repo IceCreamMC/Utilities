@@ -5,48 +5,54 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.sharkurmc</groupId>
         <artifactId>utilities</artifactId>
+        <groupId>org.sharkurmc</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>utilities-minecraft</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>universal</artifactId>
 
     <build>
+        <defaultGoal>clean package</defaultGoal>
+        <finalName>Utilities</finalName>
         <resources>
             <resource>
-                <directory>${project.basedir}/src/main/resources</directory>
-                <filtering>true</filtering>
+                <directory>../</directory>
+                <filtering>false</filtering>
                 <includes>
-                    <include>*.yml</include>
+                    <include>LICENSE.txt</include>
                 </includes>
             </resource>
         </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
 
     <dependencies>
         <dependency>
-            <groupId>io.papermc.paper</groupId>
-            <artifactId>paper-api</artifactId>
-            <version>${paper.version}</version>
-            <scope>provided</scope>
+            <groupId>org.sharkurmc</groupId>
+            <artifactId>utilities-minecraft</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.sharkurmc</groupId>
             <artifactId>utilities-java</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Team;
+import org.sharkurmc.utilities.java.RandomUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,7 +18,9 @@ import java.util.stream.Collectors;
 public class Scoreboard {
     private org.bukkit.scoreboard.Scoreboard originalScoreboard;
     private Objective objective;
+    private String randomId;
     public Scoreboard(Component title) {
+        this.randomId = RandomUtils.randomString(7);
         this.originalScoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         this.objective = originalScoreboard.registerNewObjective("obj", "dummy", title);
 
@@ -55,7 +58,9 @@ public class Scoreboard {
      * @param i position of line
      */
     public void setLine(Component line, int i) {
-        Team team = originalScoreboard.getTeam("scoreboard_"+i) != null ? originalScoreboard.getTeam("scoreboard_"+i) : originalScoreboard.registerNewTeam("scoreboard_"+i);
+        Team team = originalScoreboard.getTeam("scoreboard_"+randomId+"_"+i) != null ?
+                originalScoreboard.getTeam("scoreboard_"+randomId+"_"+i) :
+                originalScoreboard.registerNewTeam("scoreboard_"+randomId+"_"+i);
         team.suffix(line);
 
         String empty = scoreToName(i);

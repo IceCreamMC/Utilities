@@ -11,6 +11,8 @@
 
     <modules>
         <module>utilities-minecraft</module>
+        <module>universal</module>
+        <module>utilities-java</module>
     </modules>
 
     <name>Utilities</name>
