@@ -53,7 +53,7 @@ public class JavaUpdater {
 
     private static void download(String fileName, String downloadUrl, String updaterPath) {
         try {
-            Process p = Runtime.getRuntime().exec("java -jar "+updaterPath+" -downloadUrl="+downloadUrl+" -fileName="+fileName);
+            Process p = Runtime.getRuntime().exec("java -jar "+updaterPath+" -downloadUrl="+downloadUrl+" -fileName="+fileName +" -restart=false");
 
             LOGGER.info("A new version of the program is currently being downloaded.");
             LOGGER.warning("Don't worry, the program isn't stuck, it just doesn't have a progress bar.");

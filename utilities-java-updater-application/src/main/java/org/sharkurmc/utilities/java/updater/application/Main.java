@@ -15,7 +15,7 @@ public class Main implements Callable<String> {
     @CommandLine.Option(names = "-fileName", description = "Filename for downloaded jar")
     private String fileName;
 
-    @CommandLine.Option(names = "-restart", description = "Restart jar")
+    @CommandLine.Option(names = "-restart", description = "Restart jar", defaultValue = "false")
     private String restart;
 
     public static void main(String... args) throws Exception {
@@ -24,7 +24,7 @@ public class Main implements Callable<String> {
     }
 
     public String call() throws Exception {
-        if (restart.equals("true")) {
+        if (restart != null && restart.equals("true")) {
             Files.move(Paths.get("./cache/"+fileName), Paths.get(fileName), StandardCopyOption.REPLACE_EXISTING);
             return "success";
         }
