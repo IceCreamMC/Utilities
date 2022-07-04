@@ -2,6 +2,9 @@ package org.sharkurmc.utilities.java;
 
 import java.security.SecureRandom;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class RandomUtils {
     /**
