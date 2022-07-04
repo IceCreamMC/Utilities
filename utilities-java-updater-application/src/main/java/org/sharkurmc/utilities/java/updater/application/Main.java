@@ -21,22 +21,15 @@ public class Main implements Callable<String> {
     }
 
     public String call() throws Exception {
-        /**
-        String path = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-        String serverJar = FileUtils.extractFileName(path);
-        */ // TODO - ADD IT TO SHARKUR
-
         LOGGER.info("A new version of the program is currently being downloaded.");
         LOGGER.warning("Don't worry, the program isn't stuck, it just doesn't have a progress bar.");
 
         File file = new File("cache", fileName);
         file.getParentFile().mkdirs();
 
-        //java.nio.file.Files.copy(new java.net.URL(downloadUrl).openStream(), file.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        java.nio.file.Files.copy(new java.net.URL(downloadUrl).openStream(), file.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
 
         LOGGER.info("New version of the program has been downloaded.");
-
-
 
         return "success";
     }

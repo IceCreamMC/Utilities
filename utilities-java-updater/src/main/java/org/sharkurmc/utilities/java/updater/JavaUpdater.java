@@ -1,9 +1,18 @@
 package org.sharkurmc.utilities.java.updater;
 
+import org.sharkurmc.utilities.java.FileUtils;
+
 import java.io.File;
 import java.util.logging.Logger;
 
 public class JavaUpdater {
+    public static void start(String downloadUrl) {
+        String path = JavaUpdater.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        String fileName = FileUtils.extractFileName(path);
+
+        start(fileName, downloadUrl);
+    }
+
     public static void start(String fileName, String downloadUrl) {
         File file = new File("cache", "updater.jar");
         file.getParentFile().mkdirs();
