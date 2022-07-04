@@ -47,8 +47,6 @@ public class JavaUpdater {
         } catch (Exception e) {
             System.out.printf("Can't restart jar.");
         }
-
-        System.exit(1);
     }
 
     private static void download(String fileName, String downloadUrl, String updaterPath) {
