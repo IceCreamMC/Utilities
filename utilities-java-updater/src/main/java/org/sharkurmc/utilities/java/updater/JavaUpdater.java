@@ -2,10 +2,8 @@ package org.sharkurmc.utilities.java.updater;
 
 import org.sharkurmc.utilities.java.FileUtils;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 public class JavaUpdater {
@@ -30,6 +28,26 @@ public class JavaUpdater {
         download(fileName, downloadUrl, file.getPath());
     }
 
+    public static void restart() {
+        String path = JavaUpdater.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        String fileName = FileUtils.extractFileName(path);
+
+        restart(fileName);
+    }
+
+    public static void restart(String fileName) {
+        File file = new File("cache", "updater.jar");
+        file.getParentFile().mkdirs();
+
+        try {
+            Runtime.getRuntime().exec("java -jar "+file.getPath()+" -restart=true"+" -fileName="+fileName);
+        } catch (Exception e) {
+            System.out.printf("Can't restart jar.");
+        }
+
+        System.exit(0);
+    }
+
     private static void download(String fileName, String downloadUrl, String updaterPath) {
         try {
             Process p = Runtime.getRuntime().exec("java -jar "+updaterPath+" -downloadUrl="+downloadUrl+" -fileName="+fileName);
@@ -40,9 +58,6 @@ public class JavaUpdater {
             p.waitFor();
 
             LOGGER.info("New version of the program has been downloaded.");
-
-            Runtime.getRuntime().exec("java -jar "+updaterPath+" -restart=true"+" -fileName="+fileName);
-            //System.exit(0);
         } catch (Exception e) {
             Logger.getLogger("JavaUpdater").warning("Failed to run updater.");
         }
