@@ -11,6 +11,12 @@ public class TestRandomUtils {
     }
 
     @Test
+    public void testRandomSecureString() {
+        String randomSecureString = RandomUtils.randomSecureString(500);
+        Assertions.assertFalse(randomSecureString.isEmpty());
+    }
+
+    @Test
     public void testRandomInt() {
         Object i = RandomUtils.randomInt(1, 50);
         Assertions.assertTrue(i instanceof Integer);
