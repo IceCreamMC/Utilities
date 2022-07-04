@@ -1,6 +1,7 @@
 package org.sharkurmc.utilities.java;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomUtils {
@@ -30,8 +31,12 @@ public class RandomUtils {
      * @return string
      */
     public static String randomString(int length) {
-        byte[] array = new byte[length];
-        ThreadLocalRandom.current().nextBytes(array);
-        return new String(array, StandardCharsets.UTF_8);
+        Random random = new Random();
+
+        return random.ints(48, 122 + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(length)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
     }
 }
