@@ -3,17 +3,20 @@ package org.sharkurmc.utilities.java.updater.application;
 import picocli.CommandLine;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.concurrent.Callable;
-import java.util.logging.Logger;
 
 public class Main implements Callable<String> {
-    private Logger LOGGER = Logger.getLogger("Java Updater");
-
-    @CommandLine.Option(names = "-downloadUrl", description = "Download url", required = true)
+    @CommandLine.Option(names = "-downloadUrl", description = "Download url")
     private String downloadUrl;
 
-    @CommandLine.Option(names = "-fileName", description = "Filename for downloaded jar", required = true)
+    @CommandLine.Option(names = "-fileName", description = "Filename for downloaded jar")
     private String fileName;
+
+    @CommandLine.Option(names = "-restart", description = "Restart jar")
+    private String restart;
 
     public static void main(String... args) throws Exception {
         int exitCode = new CommandLine(new Main()).execute(args);
@@ -21,15 +24,15 @@ public class Main implements Callable<String> {
     }
 
     public String call() throws Exception {
-        LOGGER.info("A new version of the program is currently being downloaded.");
-        LOGGER.warning("Don't worry, the program isn't stuck, it just doesn't have a progress bar.");
+        if (restart.equals("true")) {
+            Files.move(Paths.get("./cache/"+fileName), Paths.get(fileName), StandardCopyOption.REPLACE_EXISTING);
+            return "success";
+        }
 
         File file = new File("cache", fileName);
         file.getParentFile().mkdirs();
 
         java.nio.file.Files.copy(new java.net.URL(downloadUrl).openStream(), file.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-
-        LOGGER.info("New version of the program has been downloaded.");
 
         return "success";
     }
