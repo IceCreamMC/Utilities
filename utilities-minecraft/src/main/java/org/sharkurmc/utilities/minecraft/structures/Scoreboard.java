@@ -16,15 +16,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Scoreboard {
-    private org.bukkit.scoreboard.Scoreboard originalScoreboard;
-    private Objective objective;
-    private String randomId;
+    public org.bukkit.scoreboard.Scoreboard originalScoreboard;
+    public Objective objective;
+    public String randomId;
+    public Component title;
     public Scoreboard(Component title) {
+        this.title = title;
         this.randomId = RandomUtils.randomString(7);
         this.originalScoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        this.objective = originalScoreboard.registerNewObjective("obj", "dummy", title);
 
-        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+        createObjective();
     }
 
     /**
@@ -67,7 +68,53 @@ public class Scoreboard {
         team.addEntry(empty);
 
         objective.getScore(empty).setScore(i);
-        i++;
+    }
+
+    /**
+     * Set lines in scoreboard
+     * @param lines
+     */
+    public void setLines(String... lines) {
+        setLines(Arrays.stream(lines).map((line) -> MiniMessage.miniMessage().deserialize(line)).collect(Collectors.toList()), true);
+    }
+
+    /**
+     * Set lines in scoreboard
+     * @param lines
+     * @param reset
+     */
+    public void setLines(List<Component> lines, boolean reset) {
+        Collections.reverse(lines);
+
+        if (reset) {
+            for (Team team : originalScoreboard.getTeams()) {
+                team.unregister();
+            }
+
+            createObjective();
+        }
+
+        int i = 1;
+        for (Component line : lines) {
+            setLine(line, i);
+            i++;
+        }
+    }
+
+    /**
+     * Set scoreboard title
+     * @param title
+     */
+    public void setTitle(String title) {
+        setTitle(MiniMessage.miniMessage().deserialize(title));
+    }
+
+    /**
+     * Set scoreboard title
+     * @param title
+     */
+    public void setTitle(Component title) {
+        objective.displayName(title);
     }
 
     /**
@@ -78,21 +125,8 @@ public class Scoreboard {
      */
     public static org.sharkurmc.utilities.minecraft.structures.Scoreboard createScoreboard(String title, String... lines) {
         return createScoreboard(
-                title,
-                Arrays.asList(lines)
-        );
-    }
-
-    /**
-     * Create scoreboard
-     * @param title
-     * @param lines
-     * @return scoreboard
-     */
-    public static org.sharkurmc.utilities.minecraft.structures.Scoreboard createScoreboard(String title, List<String> lines) {
-        return createScoreboard(
                 MiniMessage.miniMessage().deserialize(title),
-                lines.stream().map((line) -> MiniMessage.miniMessage().deserialize(line)).collect(Collectors.toList())
+                Arrays.stream(lines).map((line) -> MiniMessage.miniMessage().deserialize(line)).collect(Collectors.toList())
         );
     }
 
@@ -107,16 +141,18 @@ public class Scoreboard {
 
         Scoreboard scoreboard = new Scoreboard(title);
 
-        int i = 1;
-        for (Component line : lines) {
-            scoreboard.setLine(line, i);
-            i++;
-        }
+        scoreboard.setLines(lines, false);
 
         return scoreboard;
     }
 
     private static String scoreToName(int score) {
         return ChatColor.values()[score].toString();
+    }
+
+    private void createObjective() {
+        if (objective != null) objective.unregister();
+        objective = originalScoreboard.registerNewObjective("obj", "dummy", title);
+        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
     }
 }
