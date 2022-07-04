@@ -8,7 +8,7 @@ Maven
 ```xml
 <repository>
     <id>utilities</id>
-    <url>https://reposilite.cezarsalat.tk/releases</url>
+    <url>https://repo.rgarlic.eu/releases</url>
 </repository>
 ```
 ```xml
@@ -23,7 +23,7 @@ Maven
 Gradle
 ```kotlin
 repositories {
-    maven("https://reposilite.cezarsalat.tk/releases")
+    maven("https://repo.rgarlic.eu/releases")
 }
 ```
 ```kotlin
@@ -37,7 +37,7 @@ Maven
 ```xml
 <repository>
     <id>utilities</id>
-    <url>https://reposilite.cezarsalat.tk/releases</url>
+    <url>https://repo.rgarlic.eu/releases</url>
 </repository>
 ```
 ```xml
@@ -52,7 +52,7 @@ Maven
 Gradle
 ```kotlin
 repositories {
-    maven("https://reposilite.cezarsalat.tk/releases")
+    maven("https://repo.rgarlic.eu/releases")
 }
 ```
 ```kotlin
@@ -66,7 +66,7 @@ Maven
 ```xml
 <repository>
     <id>utilities</id>
-    <url>https://reposilite.cezarsalat.tk/releases</url>
+    <url>https://repo.rgarlic.eu/releases</url>
 </repository>
 ```
 ```xml
@@ -81,7 +81,7 @@ Maven
 Gradle
 ```kotlin
 repositories {
-    maven("https://reposilite.cezarsalat.tk/releases")
+    maven("https://repo.rgarlic.eu/releases")
 }
 ```
 ```kotlin
