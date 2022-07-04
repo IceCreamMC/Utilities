@@ -9,8 +9,8 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         synchronized (processed) {
             JavaUpdater.start("https://jenkins.cezarsalat.tk/job/Sharkur/job/ver%2F1.19/lastSuccessfulBuild/artifact/build/libs/sharkur-paperclip-1.19-R0.1-SNAPSHOT-reobf.jar");
-            processed.wait();
-            JavaUpdater.restart();
         }
+
+        JavaUpdater.restart();
     }
 }

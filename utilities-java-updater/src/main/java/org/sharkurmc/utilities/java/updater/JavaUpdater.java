@@ -4,6 +4,9 @@ import org.sharkurmc.utilities.java.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
 import java.util.logging.Logger;
 
 public class JavaUpdater {
@@ -45,7 +48,7 @@ public class JavaUpdater {
             System.out.printf("Can't restart jar.");
         }
 
-        System.exit(0);
+        System.exit(1);
     }
 
     private static void download(String fileName, String downloadUrl, String updaterPath) {
