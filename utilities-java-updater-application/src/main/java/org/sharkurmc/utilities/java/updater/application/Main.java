@@ -48,7 +48,7 @@ public class Main implements Callable<String> {
                 } catch (Exception e) {
                     // Do nothing
                 }
-            });
+            }).start();
             return "success";
         }
 
