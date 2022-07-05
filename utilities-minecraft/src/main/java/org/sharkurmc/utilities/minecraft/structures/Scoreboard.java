@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Team;
-import org.sharkurmc.utilities.java.RandomUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,11 +17,9 @@ import java.util.stream.Collectors;
 public class Scoreboard {
     public org.bukkit.scoreboard.Scoreboard originalScoreboard;
     public Objective objective;
-    public String randomId;
     public Component title;
     public Scoreboard(Component title) {
         this.title = title;
-        this.randomId = RandomUtils.randomString(7);
         this.originalScoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 
         createObjective();
@@ -50,24 +47,24 @@ public class Scoreboard {
      * @param i position of line
      */
     public void setLine(String line, int i) {
-        setLine(MiniMessage.miniMessage().deserialize(line), i);
-    }
+        Team team = originalScoreboard.getTeam("line"+i);
 
-    /**
-     * Set line in scoreboard
-     * @param line line content
-     * @param i position of line
-     */
-    public void setLine(Component line, int i) {
-        Team team = originalScoreboard.getTeam("scoreboard_"+randomId+"_"+i) != null ?
-                originalScoreboard.getTeam("scoreboard_"+randomId+"_"+i) :
-                originalScoreboard.registerNewTeam("scoreboard_"+randomId+"_"+i);
-        team.suffix(line);
+        String entry = scoreToName(i);
+        if (team != null) {
+            team.getEntries().forEach(team::removeEntry);
+            team.addEntry(entry);
+        } else {
+            team = originalScoreboard.registerNewTeam("line"+i);
+            team.addEntry(entry);
+        }
 
-        String empty = scoreToName(i);
-        team.addEntry(empty);
+        String prefix = line.substring(0, 64);
+        String suffix = line.substring(64);
 
-        objective.getScore(empty).setScore(i);
+        team.prefix(MiniMessage.miniMessage().deserialize(prefix));
+        team.suffix(MiniMessage.miniMessage().deserialize(suffix));
+
+        objective.getScore(entry).setScore(i);
     }
 
     /**
@@ -75,7 +72,7 @@ public class Scoreboard {
      * @param lines
      */
     public void setLines(String... lines) {
-        setLines(Arrays.stream(lines).map((line) -> MiniMessage.miniMessage().deserialize(line)).collect(Collectors.toList()), true);
+        setLines(Arrays.stream(lines).collect(Collectors.toList()), true);
     }
 
     /**
@@ -83,19 +80,19 @@ public class Scoreboard {
      * @param lines
      * @param reset
      */
-    public void setLines(List<Component> lines, boolean reset) {
+    public void setLines(List<String> lines, boolean reset) {
         Collections.reverse(lines);
 
         if (reset) {
-            for (Team team : originalScoreboard.getTeams()) {
-                team.unregister();
-            }
+            originalScoreboard.clearSlot(DisplaySlot.SIDEBAR);
+            originalScoreboard.getEntries().forEach(originalScoreboard::resetScores);
+            originalScoreboard.getTeams().forEach(Team::unregister);
 
             createObjective();
         }
 
         int i = 1;
-        for (Component line : lines) {
+        for (String line : lines) {
             setLine(line, i);
             i++;
         }
@@ -126,7 +123,7 @@ public class Scoreboard {
     public static org.sharkurmc.utilities.minecraft.structures.Scoreboard createScoreboard(String title, String... lines) {
         return createScoreboard(
                 MiniMessage.miniMessage().deserialize(title),
-                Arrays.stream(lines).map((line) -> MiniMessage.miniMessage().deserialize(line)).collect(Collectors.toList())
+                Arrays.stream(lines).collect(Collectors.toList())
         );
     }
 
@@ -136,7 +133,7 @@ public class Scoreboard {
      * @param lines
      * @return scoreboard
      */
-    public static org.sharkurmc.utilities.minecraft.structures.Scoreboard createScoreboard(Component title, List<Component> lines) {
+    public static org.sharkurmc.utilities.minecraft.structures.Scoreboard createScoreboard(Component title, List<String> lines) {
         Collections.reverse(lines);
 
         Scoreboard scoreboard = new Scoreboard(title);
@@ -152,7 +149,7 @@ public class Scoreboard {
 
     private void createObjective() {
         if (objective != null) objective.unregister();
-        objective = originalScoreboard.registerNewObjective("obj", "dummy", title);
+        objective = originalScoreboard.registerNewObjective("dummy", "dummy", title);
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
     }
 }
