@@ -41,14 +41,8 @@ public class Main implements Callable<String> {
             }
 
             System.out.printf("Wait 5 seconds");
-            new Thread(() -> {
-                try {
-                    Thread.sleep(5000);
-                    Files.move(Paths.get("./cache/"+fileName), Paths.get(fileName), StandardCopyOption.REPLACE_EXISTING);
-                } catch (Exception e) {
-                    // Do nothing
-                }
-            }).start();
+            Thread.sleep(5000);
+            Files.move(Paths.get("./cache/"+fileName), Paths.get(fileName), StandardCopyOption.REPLACE_EXISTING);
             return "success";
         }
 
