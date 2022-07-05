@@ -4,12 +4,6 @@ pipeline {
     DISCORD_WEBHOOK = credentials('jenkins-discord-webhook')
   }
   stages {
-    stage('Test') {
-      steps {
-        sh 'mvn test'
-      }
-    }
-
     stage('Build') {
       steps {
         sh 'mvn clean package'
