@@ -23,7 +23,7 @@ public class JavaUpdater {
         file.getParentFile().mkdirs();
 
         try {
-            java.nio.file.Files.copy(new java.net.URL("https://jenkins.cezarsalat.tk/job/utilities/job/main/lastSuccessfulBuild/artifact/utilities-java-updater-application/target/utilities-java-updater-application-1.0-SNAPSHOT-jar-with-dependencies.jar").openStream(), file.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            java.nio.file.Files.copy(new java.net.URL("https://jenkins.cezarsalat.tk/job/utilities/job/main/lastSuccessfulBuild/artifact/utilities-java-updater-application/target/utilities-java-updater-application-1.1-SNAPSHOT-jar-with-dependencies.jar").openStream(), file.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
             Logger.getLogger("JavaUpdater").warning("Failed to download updater.");
         }
