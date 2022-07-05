@@ -18,6 +18,7 @@ pipeline {
   }
   tools {
     jdk 'OpenJDK-18'
+    maven 'maven'
   }
   post {
     success {
