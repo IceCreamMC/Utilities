@@ -134,8 +134,6 @@ public class Scoreboard {
      * @return scoreboard
      */
     public static org.sharkurmc.utilities.minecraft.structures.Scoreboard createScoreboard(Component title, List<String> lines) {
-        Collections.reverse(lines);
-
         Scoreboard scoreboard = new Scoreboard(title);
 
         scoreboard.setLines(lines, false);
