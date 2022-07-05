@@ -58,8 +58,8 @@ public class Scoreboard {
             team.addEntry(entry);
         }
 
-        String prefix = line.substring(0, 64);
-        String suffix = line.substring(64);
+        String prefix = line.length() > 64 ? line.substring(0, 64) : line;
+        String suffix = line.length() > 64 ? line.substring(64) : "";
 
         team.prefix(MiniMessage.miniMessage().deserialize(prefix));
         team.suffix(MiniMessage.miniMessage().deserialize(suffix));
