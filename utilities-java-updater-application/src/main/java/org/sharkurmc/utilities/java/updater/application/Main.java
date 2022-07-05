@@ -3,6 +3,7 @@ package org.sharkurmc.utilities.java.updater.application;
 import picocli.CommandLine;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -18,6 +19,9 @@ public class Main implements Callable<String> {
     @CommandLine.Option(names = "-restart", description = "Restart jar", defaultValue = "false")
     private String restart;
 
+    @CommandLine.Option(names = "-pid", description = "Kill PID")
+    private String pid;
+
     public static void main(String... args) throws Exception {
         int exitCode = new CommandLine(new Main()).execute(args);
         System.exit(exitCode);
@@ -25,6 +29,17 @@ public class Main implements Callable<String> {
 
     public String call() throws Exception {
         if (restart != null && restart.equals("true")) {
+            String cmd;
+            if (System.getProperty("os.name").contains("Windows")) cmd = "taskkill /F /PID " + pid;
+            else cmd = "kill -9 " + pid;
+
+            try {
+                Runtime.getRuntime().exec(cmd);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "success";
+            }
+
             Files.move(Paths.get("./cache/"+fileName), Paths.get(fileName), StandardCopyOption.REPLACE_EXISTING);
             return "success";
         }

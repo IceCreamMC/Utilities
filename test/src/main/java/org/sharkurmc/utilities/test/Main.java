@@ -11,6 +11,6 @@ public class Main {
             JavaUpdater.start("https://jenkins.cezarsalat.tk/job/Sharkur/job/ver%2F1.19/lastSuccessfulBuild/artifact/build/libs/sharkur-paperclip-1.19-R0.1-SNAPSHOT-reobf.jar");
         }
 
-        JavaUpdater.restart();
+        JavaUpdater.restart(0);
     }
 }

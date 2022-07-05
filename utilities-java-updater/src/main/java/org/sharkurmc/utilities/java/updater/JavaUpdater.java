@@ -31,19 +31,19 @@ public class JavaUpdater {
         download(fileName, downloadUrl, file.getPath());
     }
 
-    public static void restart() {
+    public static void restart(long pid) {
         String path = JavaUpdater.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         String fileName = FileUtils.extractFileName(path);
 
-        restart(fileName);
+        restart(fileName, pid);
     }
 
-    public static void restart(String fileName) {
+    public static void restart(String fileName, long pid) {
         File file = new File("cache", "updater.jar");
         file.getParentFile().mkdirs();
 
         try {
-            Runtime.getRuntime().exec("java -jar "+file.getPath()+" -restart=true"+" -fileName="+fileName);
+            Runtime.getRuntime().exec("java -jar "+file.getPath()+" -restart=true"+" -fileName="+fileName+" -pid="+pid);
         } catch (Exception e) {
             System.out.printf("Can't restart jar.");
         }
