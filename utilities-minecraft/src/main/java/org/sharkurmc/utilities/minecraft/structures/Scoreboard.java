@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Team;
+import org.sharkurmc.utilities.minecraft.utils.TeamLimits;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,8 +18,8 @@ import java.util.stream.Collectors;
 public class Scoreboard {
     public org.bukkit.scoreboard.Scoreboard originalScoreboard;
     public Objective objective;
-    public Component title;
-    public Scoreboard(Component title) {
+    public String title;
+    public Scoreboard(String title) {
         this.title = title;
         this.originalScoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 
@@ -58,8 +59,8 @@ public class Scoreboard {
             team.addEntry(entry);
         }
 
-        String prefix = line.length() > 64 ? line.substring(0, 64) : line;
-        String suffix = line.length() > 64 ? line.substring(64) : "";
+        String prefix = line.length() > TeamLimits.getLengthLimit() ? line.substring(0, TeamLimits.getLengthLimit()) : line;
+        String suffix = line.length() > TeamLimits.getLengthLimit() ? line.substring(TeamLimits.getLengthLimit()) : "";
 
         team.prefix(MiniMessage.miniMessage().deserialize(prefix));
         team.suffix(MiniMessage.miniMessage().deserialize(suffix));
@@ -103,15 +104,9 @@ public class Scoreboard {
      * @param title
      */
     public void setTitle(String title) {
-        setTitle(MiniMessage.miniMessage().deserialize(title));
-    }
+        if (title.length() > TeamLimits.getLengthLimit() * 2) title = title.substring(0, TeamLimits.getLengthLimit() * 2);
 
-    /**
-     * Set scoreboard title
-     * @param title
-     */
-    public void setTitle(Component title) {
-        objective.displayName(title);
+        objective.displayName(MiniMessage.miniMessage().deserialize(title));
     }
 
     /**
@@ -122,7 +117,7 @@ public class Scoreboard {
      */
     public static org.sharkurmc.utilities.minecraft.structures.Scoreboard createScoreboard(String title, String... lines) {
         return createScoreboard(
-                MiniMessage.miniMessage().deserialize(title),
+                title,
                 Arrays.stream(lines).collect(Collectors.toList())
         );
     }
@@ -133,7 +128,7 @@ public class Scoreboard {
      * @param lines
      * @return scoreboard
      */
-    public static org.sharkurmc.utilities.minecraft.structures.Scoreboard createScoreboard(Component title, List<String> lines) {
+    public static org.sharkurmc.utilities.minecraft.structures.Scoreboard createScoreboard(String title, List<String> lines) {
         Scoreboard scoreboard = new Scoreboard(title);
 
         scoreboard.setLines(lines, false);
@@ -147,7 +142,9 @@ public class Scoreboard {
 
     private void createObjective() {
         if (objective != null) objective.unregister();
-        objective = originalScoreboard.registerNewObjective("dummy", "dummy", title);
+        objective = originalScoreboard.registerNewObjective("dummy", "dummy", Component.text(""));
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+        setTitle(title);
     }
 }
