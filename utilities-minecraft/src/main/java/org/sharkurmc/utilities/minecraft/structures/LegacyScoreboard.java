@@ -1,7 +1,6 @@
 package org.sharkurmc.utilities.minecraft.structures;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -107,7 +106,7 @@ public class LegacyScoreboard {
     public void setTitle(String title) {
         if (title.length() > TeamLimits.getLengthLimit() * 2) title = title.substring(0, TeamLimits.getLengthLimit() * 2);
 
-        objective.displayName(MiniMessage.miniMessage().deserialize(title));
+        objective.displayName(LegacyComponentSerializer.legacySection().deserialize(title));
     }
 
     /**
