@@ -19,7 +19,7 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: Artifacts
-          path: /target/
+          path: /utilites-minecraft/target/
       - name: Release Artifacts
         if: github.ref_name == env.branch
         uses: marvinpinto/action-automatic-releases@latest
@@ -27,7 +27,7 @@ jobs:
           title: "Release #${{ env.workflow }}"
           automatic_release_tag: release-${{ env.workflow }}
           repo_token: "${{ secrets.TOKEN }}"
-          files: **/target/*.jar
+          files: /utilites-minecraft/target/.jar
           prerelease: false
       - name: Release Artifacts (Latest)
         if: github.ref_name == env.branch
