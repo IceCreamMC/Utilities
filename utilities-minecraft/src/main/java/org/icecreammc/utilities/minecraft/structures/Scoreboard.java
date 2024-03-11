@@ -115,7 +115,7 @@ public class Scoreboard {
      * @param lines
      * @return scoreboard
      */
-    public static org.sharkurmc.utilities.minecraft.structures.Scoreboard createScoreboard(String title, String... lines) {
+    public static org.icecreammc.utilities.minecraft.structures.Scoreboard createScoreboard(String title, String... lines) {
         return createScoreboard(
                 title,
                 Arrays.stream(lines).collect(Collectors.toList())
@@ -128,7 +128,7 @@ public class Scoreboard {
      * @param lines
      * @return scoreboard
      */
-    public static org.sharkurmc.utilities.minecraft.structures.Scoreboard createScoreboard(String title, List<String> lines) {
+    public static org.icecreammc.utilities.minecraft.structures.Scoreboard createScoreboard(String title, List<String> lines) {
         Scoreboard scoreboard = new Scoreboard(title);
 
         scoreboard.setLines(lines, false);
