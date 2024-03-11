@@ -27,7 +27,7 @@ jobs:
           title: "Release #${{ env.workflow }}"
           automatic_release_tag: release-${{ env.workflow }}
           repo_token: "${{ secrets.TOKEN }}"
-          files: /target/*.jar
+          files: **/target/*.jar
           prerelease: false
       - name: Release Artifacts (Latest)
         if: github.ref_name == env.branch
