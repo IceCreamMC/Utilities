@@ -13,7 +13,7 @@ jobs:
       - name: Configure Git
         run: git config --global user.email "no-reply@github.com" && git config --global user.name "Github Actions"
       - name: Run maven
-        run: mvn clean package test
+        run: mvn clean package
       - name: Upload Artifacts
         if: env.debug == 'true' || github.ref_name != env.branch
         uses: actions/upload-artifact@main
