@@ -1,6 +1,6 @@
-package org.sharkurmc.utilities.java.updater;
+package org.icecreammc.utilities.java.updater;
 
-import org.sharkurmc.utilities.java.FileUtils;
+import org.icecreammc.utilities.java.FileUtils;
 
 import java.io.File;
 import java.util.logging.Logger;

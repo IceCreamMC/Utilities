@@ -1,4 +1,4 @@
-package org.sharkurmc.utilities.java;
+package org.icecreammc.utilities.java;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

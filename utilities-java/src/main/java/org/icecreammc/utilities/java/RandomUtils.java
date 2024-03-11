@@ -1,4 +1,4 @@
-package org.sharkurmc.utilities.java;
+package org.icecreammc.utilities.java;
 
 import java.security.SecureRandom;
 import java.util.Random;

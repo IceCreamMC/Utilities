@@ -1,4 +1,4 @@
-package org.sharkurmc.utilities.java.updater.application;
+package org.icecreammc.utilities.java.updater.application;
 
 import picocli.CommandLine;
 

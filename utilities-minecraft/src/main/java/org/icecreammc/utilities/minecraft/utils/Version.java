@@ -1,4 +1,4 @@
-package org.sharkurmc.utilities.minecraft.utils;
+package org.icecreammc.utilities.minecraft.utils;
 
 import org.bukkit.Bukkit;
 

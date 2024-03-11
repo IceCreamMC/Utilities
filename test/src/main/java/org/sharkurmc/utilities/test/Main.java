@@ -1,6 +1,6 @@
-package org.sharkurmc.utilities.test;
+package org.icecreammc.utilities.test;
 
-import org.sharkurmc.utilities.java.updater.JavaUpdater;
+import org.icecreammc.utilities.java.updater.JavaUpdater;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

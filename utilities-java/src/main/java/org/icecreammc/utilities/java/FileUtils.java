@@ -1,4 +1,4 @@
-package org.sharkurmc.utilities.java;
+package org.icecreammc.utilities.java;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

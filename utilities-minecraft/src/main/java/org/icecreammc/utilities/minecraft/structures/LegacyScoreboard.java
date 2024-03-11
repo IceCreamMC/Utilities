@@ -1,4 +1,4 @@
-package org.sharkurmc.utilities.minecraft.structures;
+package org.icecreammc.utilities.minecraft.structures;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Team;
-import org.sharkurmc.utilities.minecraft.utils.TeamLimits;
+import org.icecreammc.utilities.minecraft.utils.TeamLimits;
 
 import java.util.Arrays;
 import java.util.Collections;
